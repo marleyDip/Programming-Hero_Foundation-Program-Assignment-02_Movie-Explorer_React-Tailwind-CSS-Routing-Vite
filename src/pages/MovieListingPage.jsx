@@ -25,13 +25,21 @@ export default function MovieListingPage() {
   const [allShows, setAllShows] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
   // const [query, setQuery] = useState("");
-  const [selectedMovie, setSelectedMovie] = useState(null);
+  // const [selectedMovie, setSelectedMovie] = useState(null);
   const [status, setStatus] = useState("loading");
   const [searchStatus, setSearchStatus] = useState("idle");
   const [error, setError] = useState("");
 
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get("search") || "";
+  const selectedMovieId = searchParams.get("movie");
+
+  const handleSeeDetails = (movie) => {
+    setSearchParams({
+      ...(query && { search: query }),
+      movie: String(movie.id),
+    });
+  };
 
   const debouncedQuery = useDebouncedValue(query, 350);
 
@@ -91,6 +99,17 @@ export default function MovieListingPage() {
   const isSearching = debouncedQuery.trim().length > 0;
 
   const moviesToShow = isSearching ? searchResults : allShows;
+
+  const selectedMovie =
+    moviesToShow.find((movie) => String(movie.id) === selectedMovieId) || null;
+
+  const handleCloseModal = () => {
+    const nextParams = new URLSearchParams(searchParams);
+
+    nextParams.delete("movie");
+
+    setSearchParams(nextParams);
+  };
 
   const isLoading = status === "loading" || searchStatus === "loading";
 
@@ -234,7 +253,8 @@ export default function MovieListingPage() {
         {status !== "error" && (
           <MovieGrid
             movies={moviesToShow}
-            onSeeDetails={setSelectedMovie}
+            // onSeeDetails={setSelectedMovie}
+            onSeeDetails={handleSeeDetails}
             isLoading={isLoading}
           />
         )}
@@ -243,7 +263,8 @@ export default function MovieListingPage() {
       {/* Details Modal */}
       <MovieModal
         movie={selectedMovie}
-        onClose={() => setSelectedMovie(null)}
+        // onClose={() => setSelectedMovie(null)}
+        onClose={handleCloseModal}
       />
     </main>
   );

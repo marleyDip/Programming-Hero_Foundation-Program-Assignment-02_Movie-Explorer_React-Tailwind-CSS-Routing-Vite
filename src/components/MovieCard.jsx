@@ -73,7 +73,7 @@ export default function MovieCard({ movie, onSeeDetails }) {
             px-3.5 py-2.5
             font-body text-sm font-semibold
             text-primary
-            transition-all duration-200
+            transition-all duration-200 cursor-pointer
 
             hover:bg-primary
             hover:text-background
