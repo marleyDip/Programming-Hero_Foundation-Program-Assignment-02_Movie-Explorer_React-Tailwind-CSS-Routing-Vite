@@ -66,7 +66,7 @@ function normalizeShow(show) {
  *
  * GET /shows
  */
-export async function getAllShow(options = {}) {
+export async function getAllShows(options = {}) {
   const shows = await request("/shows", options);
 
   return shows.map(normalizeShow);
