@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #14100f;
+  --color-surface: #1c1613;
+  --color-primary: #e8b34a;
+  --color-accent: #b3403a;
+  --color-foreground: #f5f1e8;
+  --color-muted: #948e86;
+  --color-border: #332b26;
+
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-body: Inter, system-ui, sans-serif;
+
+  --shadow-soft: 0 8px 30px rgb(0 0 0 / 0.12);
+}
+
+@layer base {
+  html,
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  * {
+    scrollbar-color: var(--color-accent) var(--color-surface);
+  }
+}
+
+@utility ticket-notch {
+  @apply relative;
+
+  &::before,
+  &::after {
+    content: "";
+    @apply absolute top-1/2 h-4.5 w-4.5 -translate-y-1/2 rounded-full bg-[##14100f];
+  }
+
+  &::before {
+    @apply -left-2.25;
+  }
+
+  &::after {
+    @apply -right-2.25;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
