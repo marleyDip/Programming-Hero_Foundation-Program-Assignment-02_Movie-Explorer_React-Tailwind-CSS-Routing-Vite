@@ -51,13 +51,15 @@ export default function HeroBanner() {
       >
         <span
           className="
-            mb-4
-            font-body text-sm font-medium
+            mb-5 inline-flex items-center rounded-full border border-primary/25 bg-primary/10 px-4 py-1.5
+            font-body text-xs font-semibold
             tracking-[0.18em] uppercase
-            text-muted
+            text-primary shadow-sm shadow-primary/10 backdrop-blur-md
           "
         >
-          Now showing, worldwide
+          Now showing
+          <span className="size-1 rounded-full bg-primary/90 shadow-sm shadow-primary/50 mx-1.5" />
+          worldwide
         </span>
 
         <h1
