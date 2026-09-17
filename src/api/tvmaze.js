@@ -37,9 +37,21 @@ export function stripHtml(html) {
  * into the shape expected by the UI.
  */
 function normalizeShow(show) {
+  // console.log("Original TVMaze show:", show);
+
+  /* 
+  {
+    id: 1,
+    name: "Under the Dome",
+    premiered: "2013-06-24",
+    ...
+  }
+  */
+
   return {
     id: show.id,
-    title: show.title,
+    // title: show.title,
+    title: show.name,
 
     poster: show.image?.original || show.image?.medium || FALLBACK_POSTER,
 
@@ -103,7 +115,34 @@ export async function searchShows(query, options = {}) {
     q: trimmedQuery,
   });
 
-  const results = await request(`search/shows/${params.toString()}`, options);
+  const results = await request(`/search/shows?${params.toString()}`, options);
+  // console.log("SEARCH API:", results);
 
-  return results.map(({ show }) => normalizeShow(show));
+  const normalizedResults = results.map(({ show }) => normalizeShow(show));
+  // console.log("NORMALIZED SEARCH:", normalizedResults);
+
+  return normalizedResults;
 }
+
+/* The search endpoint returns objects shaped like:
+
+{
+  score: 1,
+  show: {
+    id: 1,
+    name: "Under the Dome",
+    ...
+  }
+}
+
+Again return normalizedResults:
+
+[
+  {
+    id: 1,
+    name: "Under the Dome",
+    ...
+  }
+]
+
+*/
